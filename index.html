@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>工商银行 · 手机银行</title>
+    <style>
+        /* 基础样式 - 工行风格 */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: "-apple-system", "PingFang SC", "Helvetica Neue", sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+        }
+        body { 
+            background-color: #f5f5f5;
+            touch-action: pan-y; 
+            overflow-x: hidden;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(180deg, #e82c2c10 0%, #ffffff 15%);
+        }
+        
+        /* 头部区域 - 工行特色红色 */
+        .header {
+            background: linear-gradient(90deg, #c91f37, #e82c2c);
+            color: white;
+            padding: 40px 20px 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.6;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .bank-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+            color: #c91f37;
+        }
+        .logo-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .header-desc {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* 页面区域样式 */
+        .section {
+            padding: 25px 20px;
+            position: relative;
+        }
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 8'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,64L80,58.7C160,53,320,43,480,48C640,53,800,75,960,74.7C1120,75,1280,53,1360,42.7L1440,32L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #c91f37;
+            display: flex;
+            align-items: center;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #c91f37;
+            border-radius: 2px;
+            margin-right: 8px;
+        }
+        .section-desc {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        /* 卡片样式 - 工行风格 */
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .card-img {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .card-content {
+            padding: 18px;
+        }
+        .card-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* 数据指标卡片样式 */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .data-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+        }
+        .data-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #c91f37;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+        .data-label {
+            font-size: 14px;
+            color: #666;
+        }
+        .data-unit {
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        /* 功能点样式 */
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .feature-item {
+            flex: 1;
+            min-width: calc(50% - 6px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px 10px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            text-align: center;
+            border: 1px solid #f5f5f5;
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            background: #fff1f0;
+            color: #c91f37;
+            font-size: 22px;
+        }
+        /* 图标加载失败时的备用样式 */
+        .feature-icon i:before {
+            content: "";
+            display: block;
+            width: 24px;
+            height: 24px;
+        }
+        /* 为每个图标设置特定的备用样式 */
+        .feature-icon .fa-text-height:before { content: "A"; font-weight: bold; font-size: 20px; }
+        .feature-icon .fa-microphone:before { content: "🎤"; }
+        .feature-icon .fa-graduation-cap:before { content: "🎓"; }
+        .feature-icon .fa-shield:before { content: "🛡"; }
+        .feature-icon .fa-exchange:before { content: "↔"; }
+        .feature-icon .fa-credit-card:before { content: "💳"; }
+        .feature-icon .fa-line-chart:before { content: "📈"; }
+        .feature-icon .fa-id-card:before { content: "🆔"; }
+        .feature-icon .fa-calendar:before { content: "📅"; }
+        .feature-icon .fa-gift:before { content: "🎁"; }
+        .feature-icon .fa-percent:before { content: "％"; }
+        .feature-icon .fa-mobile:before { content: "📱"; }
+        .feature-icon .fa-bar-chart:before { content: "📊"; }
+        .feature-icon .fa-star:before { content: "⭐"; }
+        .feature-icon .fa-comments:before { content: "💬"; }
+        .feature-icon .fa-check-circle:before { content: "✅"; }
+        
+        .feature-text {
+            flex: 1;
+        }
+        .feature-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .feature-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* 评价卡片样式 */
+        .review-list {
+            margin-bottom: 20px;
+        }
+        .review-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #f5f5f5;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .review-user {
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .review-rating {
+            color: #ff9800;
+        }
+        .review-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .review-date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+            text-align: right;
+        }
+        
+        /* 步骤样式 */
+        .steps {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 15px;
+        }
+        .steps::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #f0f0f0;
+        }
+        .step-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+        .step-dot {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #c91f37;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            border: 3px solid #fff1f0;
+        }
+        .step-content {
+            padding-top: 3px;
+        }
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .step-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* 按钮样式 - 工行红色 */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            background: #c91f37;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 2px 5px rgba(201, 31, 55, 0.2);
+            text-decoration: none; /* 移除链接下划线 */
+        }
+        .btn:hover {
+            background: #b31730;
+        }
+        
+        /* 动画效果 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 营销标签 */
+        .marketing-tag {
+            display: inline-block;
+            background: #fff1f0;
+            color: #c91f37;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+        
+        /* 图标加载动画 */
+        @keyframes iconPulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        .feature-icon i {
+            animation: iconPulse 2s infinite;
+        }
+    </style>
+    <!-- 主Font Awesome链接 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <!-- 备用Font Awesome链接，增加加载成功率 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="print" onload="this.media='all'">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部区域 -->
+        <div class="header">
+            <div class="header-content">
+                <div class="bank-logo">
+                    <div class="logo-icon">ICBC</div>
+                    <div class="logo-text">中国工商银行</div>
+                </div>
+                <h1 class="header-title">手机银行 · 智享生活</h1>
+                <p class="header-desc">便捷金融服务，随时随地畅享</p>
+            </div>
+        </div>
+        
+        <!-- 首页内容区域 -->
+        <div id="homeSection" class="section fade-in">
+            <h2 class="section-title">全客群适用 <span class="marketing-tag">简单易用</span></h2>
+            <p class="section-desc">无论年轻用户还是老年客户，都能轻松上手，便捷使用各项金融服务</p>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/26/800/400" alt="不同年龄群体使用工商银行手机银行">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">专为各年龄段设计</h3>
+                    <p class="card-desc">
+                        简洁界面配合智能引导，年轻人能快速完成复杂操作，老年人也能轻松掌握基础功能。支持字体放大、语音辅助等贴心功能，照顾不同用户需求。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-text-height"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">字体自由调节</h4>
+                        <p class="feature-desc">支持大字体模式，文字清晰可见，老年客户使用更方便</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-microphone"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">语音辅助功能</h4>
+                        <p class="feature-desc">语音导航+语音输入，减少手动操作，操作更便捷</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-graduation-cap"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">新手引导教程</h4>
+                        <p class="feature-desc">step-by-step引导，第一次使用也能轻松掌握</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-shield"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">安全中心</h4>
+                        <p class="feature-desc">多重安全认证，保障您的资金安全和信息安全</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 网点内容区域 -->
+        <div id="branchSection" class="section fade-in">
+            <h2 class="section-title">云网点 · 预约取号</h2>
+            <p class="section-desc">提前预约，减少等待，到店即可办理业务，节省您的宝贵时间</p>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/42/800/400" alt="工商银行手机银行预约取号界面">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">告别排队等待</h3>
+                    <p class="card-desc">
+                        通过手机银行提前预约网点服务，选择合适的时间和业务类型，到店后直接办理，节省宝贵时间，避免长时间排队。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="steps">
+                <div class="step-item">
+                    <div class="step-dot">1</div>
+                    <div class="step-content">
+                        <h4 class="step-title">选择网点</h4>
+                        <p class="step-desc">自动定位附近工行网点，或手动选择想去的营业网点</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-dot">2</div>
+                    <div class="step-content">
+                        <h4 class="step-title">选择业务和时间</h4>
+                        <p class="step-desc">选择需要办理的业务类型，预约合适的日期和时间段</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-dot">3</div>
+                    <div class="step-content">
+                        <h4 class="step-title">到店办理</h4>
+                        <p class="step-desc">凭预约号到店，优先办理，无需长时间等待</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 立即预约按钮 - 跳转至工行电子银行首页 -->
+            <a href="https://www.icbc.com.cn" target="_blank" class="btn">立即预约 <i class="fa fa-arrow-right ml-1"></i></a>
+        </div>
+        
+        <!-- 信用卡模块 -->
+        <div id="creditCardSection" class="section fade-in">
+            <h2 class="section-title">信用卡服务 <span class="marketing-tag">多重优惠</span></h2>
+            <p class="section-desc">便捷管理您的信用卡，享受专属权益和优惠活动，消费更省心</p>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/160/800/400" alt="工商银行信用卡服务界面">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">全方位信用卡管理</h3>
+                    <p class="card-desc">
+                        从申请到还款，一站式信用卡服务。实时查询账单、额度，快速还款，一键锁卡，更有丰富权益和优惠活动等你来享。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">账单管理</h4>
+                        <p class="feature-desc">查询账单明细，设置自动还款，避免逾期</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-gift"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">权益中心</h4>
+                        <p class="feature-desc">积分兑换、机场贵宾厅、航空里程等专属权益</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-percent"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">优惠活动</h4>
+                        <p class="feature-desc">餐饮、购物、旅游等各类商户折扣和返现活动</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-mobile"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">一键锁卡</h4>
+                        <p class="feature-desc">快速冻结卡片，保障用卡安全，防止盗刷</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="steps">
+                <div class="step-item">
+                    <div class="step-dot">1</div>
+                    <div class="step-content">
+                        <h4 class="step-title">选择卡片</h4>
+                        <p class="step-desc">根据需求选择适合的信用卡产品，查看权益详情</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-dot">2</div>
+                    <div class="step-content">
+                        <h4 class="step-title">在线申请</h4>
+                        <p class="step-desc">填写基本信息，上传必要证件，完成申请流程</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-dot">3</div>
+                    <div class="step-content">
+                        <h4 class="step-title">激活使用</h4>
+                        <p class="step-desc">卡片获批后，在线激活并设置密码，即可开始使用</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 立即申请信用卡按钮 - 跳转至工行电子银行首页 -->
+            <a href="https://www.icbc.com.cn" target="_blank" class="btn">立即申请信用卡 <i class="fa fa-credit-card ml-1"></i></a>
+        </div>
+        
+        <!-- 营销效果评价模块 -->
+        <div id="marketingEvaluationSection" class="section fade-in">
+            <h2 class="section-title">营销效果评价 <span class="marketing-tag">用户反馈</span></h2>
+            <p class="section-desc">基于海量用户数据和真实评价，全面呈现营销活动效果，持续优化服务体验</p>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/237/800/400" alt="工商银行营销活动效果分析界面">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">数据驱动的营销优化</h3>
+                    <p class="card-desc">
+                        通过收集用户对各类营销活动的反馈和行为数据，形成多维度评价体系，不断提升活动质量和用户体验，为您提供更有价值的金融服务。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 核心数据指标 -->
+            <div class="data-grid">
+                <div class="data-card">
+                    <div class="data-value">96<span class="data-unit">%</span></div>
+                    <div class="data-label">用户满意度</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-value">89<span class="data-unit">%</span></div>
+                    <div class="data-label">活动参与率</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-value">120<span class="data-unit">万+</span></div>
+                    <div class="data-label">月均活动参与人次</div>
+                </div>
+                <div class="data-card">
+                    <div class="data-value">4.8<span class="data-unit">/5分</span></div>
+                    <div class="data-label">平均活动评分</div>
+                </div>
+            </div>
+            
+            <!-- 评价维度 -->
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">数据指标分析</h4>
+                        <p class="feature-desc">参与度、转化率、满意度等多维度数据评估</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">用户评分体系</h4>
+                        <p class="feature-desc">基于真实体验的星级评价，直观反映活动质量</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-comments"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">用户反馈收集</h4>
+                        <p class="feature-desc">多渠道收集用户建议，持续优化活动内容</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">效果改进追踪</h4>
+                        <p class="feature-desc">记录优化措施及效果变化，持续提升服务质量</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 用户评价示例 -->
+            <div class="review-list">
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="review-user">张先生</div>
+                        <div class="review-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        信用卡推广活动很给力，新用户礼品实用，申请流程简单快捷，客服响应也很及时，整体体验非常好。
+                    </div>
+                    <div class="review-date">2023-06-15</div>
+                </div>
+                
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="review-user">李女士</div>
+                        <div class="review-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        理财活动介绍清晰，风险提示到位，参加后获得了预期收益。希望未来能有更多针对中老年客户的讲解活动。
+                    </div>
+                    <div class="review-date">2023-06-10</div>
+                </div>
+            </div>
+            
+            <div class="steps">
+                <div class="step-item">
+                    <div class="step-dot">1</div>
+                    <div class="step-content">
+                        <h4 class="step-title">参与营销活动</h4>
+                        <p class="step-desc">体验我行各类营销活动，包括信用卡推广、理财优惠等</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-dot">2</div>
+                    <div class="step-content">
+                        <h4 class="step-title">提交活动评价</h4>
+                        <p class="step-desc">活动结束后，通过手机银行提交您的体验评价和建议</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-dot">3</div>
+                    <div class="step-content">
+                        <h4 class="step-title">查看改进成果</h4>
+                        <p class="step-desc">关注活动优化情况，体验不断提升的金融服务</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 参与评价按钮 - 跳转至工行电子银行首页 -->
+            <a href="https://www.icbc.com.cn" target="_blank" class="btn">参与评价 <i class="fa fa-pencil ml-1"></i></a>
+        </div>
+        
+        <!-- 业务内容区域 -->
+        <div id="serviceSection" class="section fade-in">
+            <h2 class="section-title">业务办理 · 点点就行</h2>
+            <p class="section-desc">告别繁琐填写，只需轻轻一点，轻松完成各类金融业务</p>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/180/800/400" alt="工商银行手机银行快捷操作界面">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">无需填写，轻松办理</h3>
+                    <p class="card-desc">
+                        智能识别常用信息，减少重复填写。转账、缴费、理财等业务，只需几步简单操作，告别传统繁琐流程。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-exchange"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">一键转账</h4>
+                        <p class="feature-desc">常用收款人一键选择，无需重复输入账号信息，安全快捷</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-credit-card"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">快速缴费</h4>
+                        <p class="feature-desc">水电煤、话费流量，自动记忆缴费信息，一键完成支付</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-line-chart"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">理财选购</h4>
+                        <p class="feature-desc">智能推荐合适产品，一键购买，无需填写复杂表单</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fa fa-id-card"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4 class="feature-title">证件更新</h4>
+                        <p class="feature-desc">身份证等证件到期，拍照上传即可更新，无需到店</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 滚动动画功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            // 初始检查可见元素
+            checkVisibility();
+            
+            // 滚动时检查可见元素
+            window.addEventListener('scroll', checkVisibility);
+            
+            // 检查图标是否加载成功，如失败则显示备用内容
+            checkFontAwesomeLoaded();
+            
+            // 检查元素可见性，触发动画
+            function checkVisibility() {
+                fadeElements.forEach(element => {
+                    const rect = element.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    // 元素顶部进入视口底部100px时显示
+                    if (rect.top < windowHeight - 100) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // 检查Font Awesome是否加载成功
+            function checkFontAwesomeLoaded() {
+                // 创建一个测试元素
+                const testIcon = document.createElement('i');
+                testIcon.className = 'fa fa-check';
+                testIcon.style.position = 'absolute';
+                testIcon.style.visibility = 'hidden';
+                document.body.appendChild(testIcon);
+                
+                // 检查字体是否加载成功
+                const isLoaded = window.getComputedStyle(testIcon, ':before').content !== '""';
+                
+                if (!isLoaded) {
+                    // 如果字体未加载成功，添加提示类
+                    document.documentElement.classList.add('font-awesome-failed');
+                }
+                
+                document.body.removeChild(testIcon);
+            }
+        });
+    </script>
+</body>
+</html>
